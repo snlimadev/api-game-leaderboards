@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const { secret, username, password } = require('../config/config');
 const { setRateLimit } = require('../utils/set_rate_limit');
 
-const ratelimiter = setRateLimit(15, 3);
+const ratelimiter = setRateLimit(15, 10);
 
 function authenticateUser(p_username, p_password) {
   if (

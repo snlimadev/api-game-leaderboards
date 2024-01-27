@@ -4,7 +4,7 @@ const { getCurrentDatetime } = require('../utils/get_current_datetime');
 const { sanitizeInput } = require('../utils/sanitize_input');
 const { setRateLimit } = require('../utils/set_rate_limit');
 
-const ratelimiter = setRateLimit(15, 50);
+const ratelimiter = setRateLimit(15, 150);
 
 async function submitScore(player, score, platform, game) {
   if (
