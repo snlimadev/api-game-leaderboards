@@ -16,7 +16,7 @@ async function getRanking(platform, game, top) {
     };
 
     const options = {
-      sort: { score: -1 },
+      sort: { score: -1, _id: 1 },
       projection: { _id: 0, player: 1, score: 1 },
       limit: (top && parseInt(top) > 0) ? parseInt(top) : null
     };
