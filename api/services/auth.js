@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { secret, username, password } = require('../config/config');
 const { setRateLimit } = require('../utils/set_rate_limit');
+const { getCurrentDatetime } = require('../utils/get_current_datetime');
 
 const ratelimiter = setRateLimit(15, 10);
 
@@ -14,10 +15,10 @@ function authenticateUser(p_username, p_password) {
   }
 
   if (p_username === username && p_password === password) {
-    const randomId = crypto.randomBytes(4).readUInt32LE(0);
-    const randomUsername = crypto.randomBytes(16).toString('hex');
-    const user = { id: randomId, username: randomUsername };
-    const token = jwt.sign(user, secret, { expiresIn: '15m' });
+    const randomId = crypto.randomBytes(16).toString('hex');
+    // The payload here is just to avoid always generating identical tokens
+    const payload = { tokenId: randomId, timestamp: getCurrentDatetime() };
+    const token = jwt.sign(payload, secret, { expiresIn: '15m' });
 
     return { status: 200, json: { access_token: token } };
   } else {
