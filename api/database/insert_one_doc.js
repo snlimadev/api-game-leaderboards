@@ -11,7 +11,11 @@ async function insertOneDoc(doc, db, coll) {
       const database = client.db(db);
       const collection = database.collection(coll);
 
-      await collection.insertOne(doc);
+      const result = await collection.insertOne(doc);
+
+      if (!result.acknowledged) {
+        throw new Error('Insertion not acknowledged.');
+      }
     } finally {
       await client.close();
     }
