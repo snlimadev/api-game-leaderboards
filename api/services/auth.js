@@ -16,8 +16,8 @@ async function authenticateUser(p_username, p_password) {
     return { status: 400, json: { error: 'Invalid request.' } };
   }
 
-  const usernameMatch = p_username === username;
-  const passwordMatch = await bcrypt.compare(p_password, password);
+  const usernameMatch = p_username.toString() === username;
+  const passwordMatch = await bcrypt.compare(p_password.toString(), password);
 
   if (usernameMatch && passwordMatch) {
     const randomId = crypto.randomBytes(16).toString('hex');
