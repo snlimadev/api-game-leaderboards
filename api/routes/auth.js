@@ -45,9 +45,9 @@ const { ratelimiter, authenticateUser } = require('../services/auth');
 
 router.use(ratelimiter);
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { username, password } = req.body;
-  const authResult = authenticateUser(username, password);
+  const authResult = await authenticateUser(username, password);
 
   res.status(authResult.status).json(authResult.json);
 });

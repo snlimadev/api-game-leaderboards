@@ -1,28 +1,26 @@
 require('dotenv').config();
 
 const express = require('express');
-const app = express();
-app.set('trust proxy', 1);
-
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-
 const cors = require('cors');
-app.use(cors());
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
 const { swaggerCss } = require('./config/config');
 
-app.use(
-  '/api-docs',
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, { customCssUrl: swaggerCss })
-);
-
 const authRoute = require('./routes/auth');
 const getRankingRoute = require('./routes/get_ranking');
 const submitScoreRoute = require('./routes/submit_score');
+
+const app = express();
+
+app.set('trust proxy', 1);
+app.use(bodyParser.json());
+app.use(cors());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCssUrl: swaggerCss
+}));
 
 app.use('/auth', authRoute);
 app.use('/get_ranking', getRankingRoute);
@@ -34,7 +32,6 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
-
   res.status(500).json({ error: 'Internal server error.' });
 });
 

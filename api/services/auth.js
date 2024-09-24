@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+
 const { secret, username, password } = require('../config/config');
 const { setRateLimit } = require('../utils/set_rate_limit');
 const { getCurrentDatetime } = require('../utils/get_current_datetime');
 
 const ratelimiter = setRateLimit(15, 10);
 
-function authenticateUser(p_username, p_password) {
+async function authenticateUser(p_username, p_password) {
   if (
     !(p_username && p_username.toString().trim()) ||
     !(p_password && p_password.toString().trim())
@@ -14,7 +16,10 @@ function authenticateUser(p_username, p_password) {
     return { status: 400, json: { error: 'Invalid request.' } };
   }
 
-  if (p_username === username && p_password === password) {
+  const usernameMatch = p_username === username;
+  const passwordMatch = await bcrypt.compare(p_password, password);
+
+  if (usernameMatch && passwordMatch) {
     const randomId = crypto.randomBytes(16).toString('hex');
     // The payload here is just to avoid always generating identical tokens
     const payload = { tokenId: randomId, timestamp: getCurrentDatetime() };
