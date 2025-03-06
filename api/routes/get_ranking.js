@@ -60,16 +60,12 @@
 const express = require('express');
 const router = express.Router();
 
+const { setRateLimit } = require('../utils/set_rate_limit');
 const { validateToken } = require('../utils/validate_token');
-const { ratelimiter, getRanking } = require('../services/get_ranking');
+const { getRankingController } = require('../controllers/get_ranking');
 
-router.use(ratelimiter);
+router.use(setRateLimit(15, 150));
 
-router.get('/', validateToken, async (req, res) => {
-  const { platform, game, top } = req.query;
-  const ranking = await getRanking(platform, game, top);
-
-  res.status(ranking.status).json(ranking.json);
-});
+router.get('/', validateToken, getRankingController);
 
 module.exports = router;

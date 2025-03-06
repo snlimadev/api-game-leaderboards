@@ -11,7 +11,7 @@
  *     description: >
  *       This endpoint is used to submit a player's game score.
  *     tags:
- *       - Submit Score
+ *       - Ranking
  *     parameters:
  *       - in: body
  *         name: scoreData
@@ -56,16 +56,12 @@
 const express = require('express');
 const router = express.Router();
 
+const { setRateLimit } = require('../utils/set_rate_limit');
 const { validateToken } = require('../utils/validate_token');
-const { ratelimiter, submitScore } = require('../services/submit_score');
+const { submitScoreController } = require('../controllers/submit_score');
 
-router.use(ratelimiter);
+router.use(setRateLimit(15, 150));
 
-router.post('/', validateToken, async (req, res) => {
-  const { player, score, platform, game } = req.body;
-  const scoreSubmitted = await submitScore(player, score, platform, game);
-
-  res.status(scoreSubmitted.status).json(scoreSubmitted.json);
-});
+router.post('/', validateToken, submitScoreController);
 
 module.exports = router;

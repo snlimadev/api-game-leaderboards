@@ -41,15 +41,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { ratelimiter, authenticateUser } = require('../services/auth');
+const { setRateLimit } = require('../utils/set_rate_limit');
+const { authController } = require('../controllers/auth');
 
-router.use(ratelimiter);
+router.use(setRateLimit(15, 10));
 
-router.post('/', async (req, res) => {
-  const { username, password } = req.body;
-  const authResult = await authenticateUser(username, password);
-
-  res.status(authResult.status).json(authResult.json);
-});
+router.post('/', authController);
 
 module.exports = router;
