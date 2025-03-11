@@ -49,8 +49,6 @@
  *         description: Bad Request
  *       401:
  *         description: Unauthorized
- *       403:
- *         description: Forbidden
  *       429:
  *         description: Too Many Requests
  *       500:

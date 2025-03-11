@@ -2,7 +2,6 @@ const { submitScore } = require('../services/submit_score');
 
 async function submitScoreController(req, res) {
   const { player, score, platform, game } = req.body;
-  let status, json;
 
   if (
     !(player && player.toString().trim()) ||
@@ -10,21 +9,16 @@ async function submitScoreController(req, res) {
     !(platform && platform.toString().trim()) ||
     !(game && game.toString().trim())
   ) {
-    status = 400;
-    json = { error: 'Invalid request.' };
-  } else {
-    const scoreSubmitted = await submitScore(player, score, platform, game);
-
-    if (scoreSubmitted) {
-      status = 200;
-      json = { message: 'Request successfully submitted.' };
-    } else {
-      status = 500;
-      json = { error: 'Internal server error.' };
-    }
+    return res.status(400).json({ error: 'Invalid request.' });
   }
 
-  res.status(status).json(json);
+  const scoreSubmitted = await submitScore(player, score, platform, game);
+
+  if (scoreSubmitted) {
+    return res.status(200).json({ message: 'Request successfully submitted.' });
+  } else {
+    return res.status(500).json({ error: 'Internal server error.' });
+  }
 }
 
 module.exports = { submitScoreController };
