@@ -1,4 +1,4 @@
-const { getRanking } = require('../services/get_ranking');
+const { getRanking } = require('../services');
 
 async function getRankingController(req, res) {
   const { platform, game, top } = req.query;

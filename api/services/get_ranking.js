@@ -1,6 +1,6 @@
 const { database, collection } = require('../config/config');
-const { findMultipleDocs } = require('../database/find_multiple_docs');
-const { sanitizeInput } = require('../utils/sanitize_input');
+const { sanitizeInput } = require('../utils');
+const { findMultipleDocs } = require('../database');
 
 async function getRanking(platform, game, top) {
   const query = {

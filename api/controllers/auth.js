@@ -1,4 +1,4 @@
-const { authenticateUser } = require('../services/auth');
+const { authenticateUser } = require('../services');
 
 async function authController(req, res) {
   const { username, password } = req.body;

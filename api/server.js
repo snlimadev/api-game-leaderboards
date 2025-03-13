@@ -8,9 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('../swagger');
 const { swaggerCss } = require('./config/config');
 
-const authRoute = require('./routes/auth');
-const getRankingRoute = require('./routes/get_ranking');
-const submitScoreRoute = require('./routes/submit_score');
+const routes = require('./routes');
 
 const app = express();
 
@@ -22,9 +20,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customCssUrl: swaggerCss
 }));
 
-app.use('/auth', authRoute);
-app.use('/get_ranking', getRankingRoute);
-app.use('/submit_score', submitScoreRoute);
+Object.values(routes).forEach((route) => {
+  app.use(route.path, route.router);
+
+  app.all(route.path, (req, res, next) => {
+    res.status(405).json({ error: 'Method not allowed.' });
+  });
+});
 
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Route not found.' });

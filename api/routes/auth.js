@@ -32,6 +32,8 @@
  *         description: Bad Request
  *       401:
  *         description: Unauthorized
+ *       405:
+ *         description: Method Not Allowed
  *       429:
  *         description: Too Many Requests
  *       500:
@@ -39,13 +41,15 @@
  */
 
 const express = require('express');
-const router = express.Router();
 
-const { setRateLimit } = require('../utils/set_rate_limit');
-const { authController } = require('../controllers/auth');
+const { setRateLimit } = require('../utils');
+const { authController } = require('../controllers');
+
+const path = '/auth';
+const router = express.Router();
 
 router.use(setRateLimit(15, 10));
 
 router.post('/', authController);
 
-module.exports = router;
+module.exports = { path, router };

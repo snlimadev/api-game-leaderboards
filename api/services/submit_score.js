@@ -1,7 +1,6 @@
 const { database, collection } = require('../config/config');
-const { insertOneDoc } = require('../database/insert_one_doc');
-const { getCurrentDatetime } = require('../utils/get_current_datetime');
-const { sanitizeInput } = require('../utils/sanitize_input');
+const { getCurrentDatetime, sanitizeInput } = require('../utils');
+const { insertOneDoc } = require('../database');
 
 async function submitScore(player, score, platform, game) {
   const doc = {

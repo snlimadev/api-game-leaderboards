@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt');
 
 const { secret, username, password } = require('../config/config');
-const { getCurrentDatetime } = require('../utils/get_current_datetime');
+const { getCurrentDatetime } = require('../utils');
 
 async function authenticateUser(p_username, p_password) {
   const usernameMatch = p_username.toString() === username;

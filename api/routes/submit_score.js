@@ -45,6 +45,8 @@
  *         description: Bad Request
  *       401:
  *         description: Unauthorized
+ *       405:
+ *         description: Method Not Allowed
  *       429:
  *         description: Too Many Requests
  *       500:
@@ -52,14 +54,15 @@
  */
 
 const express = require('express');
+
+const { setRateLimit, validateToken } = require('../utils');
+const { submitScoreController } = require('../controllers');
+
+const path = '/submit_score';
 const router = express.Router();
 
-const { setRateLimit } = require('../utils/set_rate_limit');
-const { validateToken } = require('../utils/validate_token');
-const { submitScoreController } = require('../controllers/submit_score');
-
-router.use(setRateLimit(15, 150));
+router.use(setRateLimit());
 
 router.post('/', validateToken, submitScoreController);
 
-module.exports = router;
+module.exports = { path, router };

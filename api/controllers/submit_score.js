@@ -1,4 +1,4 @@
-const { submitScore } = require('../services/submit_score');
+const { submitScore } = require('../services');
 
 async function submitScoreController(req, res) {
   const { player, score, platform, game } = req.body;
