@@ -10,6 +10,8 @@
  *     summary: Submit player's game score
  *     description: >
  *       This endpoint is used to submit a player's game score.
+ *       The successful JSON response contains the property 'message' (string).
+ *       In case of failure, it returns the property 'error' (string).
  *     tags:
  *       - Ranking
  *     parameters:
@@ -26,7 +28,9 @@
  *               example: john_doe
  *             score:
  *               type: integer
- *               description: The score recorded by the player
+ *               description: >
+ *                 The score recorded by the player.
+ *                 It must be a positive integer.
  *               example: 100
  *             platform:
  *               type: string

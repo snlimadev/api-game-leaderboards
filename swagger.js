@@ -5,7 +5,7 @@ const options = {
     swagger: '2.0',
     info: {
       title: 'Game Leaderboards',
-      version: '1.0.12',
+      version: '1.0.13',
       description: 'A Node.js API for submitting scores and retrieving ' +
         'rankings for games, whose data are stored in a MongoDB database.',
     },

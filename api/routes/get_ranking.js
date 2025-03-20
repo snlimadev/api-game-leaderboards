@@ -10,8 +10,10 @@
  *     summary: Retrieve the top scores for a game
  *     description: >
  *       This endpoint is used to retrieve the top scores for the specified game.
- *       The JSON response is an array of objects containing the properties
- *       'position', 'player' and 'score'.
+ *       The successful JSON response contains the property 'ranking', which consists
+ *       of an array of objects containing the properties 'position' (integer),
+ *       'player' (string) and 'score' (integer).
+ *       In case of failure, it returns the property 'error' (string).
  *     tags:
  *       - Ranking
  *     parameters:
@@ -35,7 +37,9 @@
  * 
  *       - in: query
  *         name: top
- *         description: The number of positions to be returned (optional)
+ *         description: >
+ *           The number of positions to be returned (optional).
+ *           It must be a positive integer if provided.
  *         required: false
  *         schema:
  *           type: integer

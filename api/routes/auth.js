@@ -6,7 +6,9 @@
  *     description: >
  *       This endpoint is used to authenticate a user by validating the provided
  *       username and password against credentials stored in environment variables.
- *       The JSON response contains an access token that expires in 15 minutes.
+ *       The successful JSON response contains the property 'access_token' (string),
+ *       which consists of a token that expires in 15 minutes.
+ *       In case of failure, it returns the property 'error' (string).
  *     tags:
  *       - Authentication
  *     parameters:
